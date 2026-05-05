@@ -1,0 +1,11 @@
+{
+  "id": "opencode-ai-agent",
+  "name": "OpenCode AI Agent",
+  "version": "1.0.0",
+  "minAppVersion": "1.1.0",
+  "description": "AI agent with file editing, agent mode, and 20+ models (free & paid). Like Claude Code inside Obsidian.",
+  "author": "Marat Salikhov",
+  "authorUrl": "https://github.com/maratsalihov",
+  "isDesktopOnly": false,
+  "fundingUrl": ""
+}

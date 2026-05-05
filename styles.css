@@ -1,0 +1,199 @@
+.opencode-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.opencode-header {
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-2);
+  padding: var(--size-4-3) var(--size-4-4);
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.opencode-model-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-2);
+  padding: var(--size-4-1) var(--size-4-3);
+  border-radius: var(--radius-s);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: var(--font-smaller);
+  background: var(--background-modifier-hover);
+  transition: background 0.15s ease;
+}
+
+.opencode-model-btn:hover {
+  background: var(--background-modifier-active-hover);
+}
+
+.opencode-model-provider {
+  font-size: var(--font-smallest);
+  opacity: 0.7;
+  text-transform: uppercase;
+}
+
+.opencode-mode-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-2);
+  padding: var(--size-4-1) var(--size-4-3);
+  border-radius: var(--radius-s);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: var(--font-smaller);
+  background: var(--background-secondary);
+  transition: background 0.15s ease;
+}
+
+.opencode-mode-btn:hover {
+  background: var(--background-modifier-hover);
+}
+
+.opencode-mode-btn.agent {
+  color: var(--color-accent);
+}
+
+.opencode-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--size-4-4);
+}
+
+.opencode-msg {
+  margin-bottom: var(--size-4-4);
+  padding: var(--size-4-3);
+  border-radius: var(--radius-m);
+  background: var(--background-secondary);
+}
+
+.opencode-msg-user {
+  background: var(--background-modifier-hover);
+  margin-left: var(--size-4-4);
+}
+
+.opencode-msg-assistant {
+  background: var(--background-primary-alt);
+  margin-right: var(--size-4-4);
+}
+
+.opencode-msg-system {
+  background: transparent;
+  border: 1px dashed var(--background-modifier-border);
+  text-align: center;
+  font-size: var(--font-smaller);
+  color: var(--text-muted);
+}
+
+.opencode-msg-header {
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-2);
+  margin-bottom: var(--size-4-2);
+}
+
+.opencode-msg-role {
+  font-weight: 600;
+  font-size: var(--font-smaller);
+  color: var(--text-muted);
+}
+
+.opencode-msg-status {
+  font-size: var(--font-smallest);
+  color: var(--text-accent);
+  font-style: italic;
+  margin-bottom: var(--size-4-2);
+}
+
+.opencode-msg-text {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  line-height: 1.6;
+}
+
+.opencode-input-area {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--size-4-2);
+  padding: var(--size-4-3) var(--size-4-4);
+  border-top: 1px solid var(--background-modifier-border);
+  background: var(--background-primary);
+}
+
+.opencode-input {
+  flex: 1;
+  resize: none;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-s);
+  padding: var(--size-4-2) var(--size-4-3);
+  font-family: var(--font-text);
+  font-size: var(--font-size);
+  line-height: 1.5;
+  background: var(--background-secondary);
+  color: var(--text-normal);
+  min-height: 40px;
+  max-height: 200px;
+}
+
+.opencode-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-accent-hover);
+}
+
+.opencode-send-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-s);
+  background: var(--color-accent);
+  color: var(--text-on-accent);
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.opencode-send-btn:hover {
+  background: var(--color-accent-hover);
+}
+
+.opencode-send-btn:active {
+  transform: scale(0.95);
+}
+
+.opencode-model-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--size-4-2) var(--size-4-3);
+  border-radius: var(--radius-s);
+  cursor: pointer;
+  font-size: var(--font-smaller);
+  transition: background 0.1s ease;
+}
+
+.opencode-model-option:hover {
+  background: var(--background-modifier-hover);
+}
+
+.opencode-model-option.active {
+  background: var(--color-accent);
+  color: var(--text-on-accent);
+}
+
+.opencode-model-option.active .opencode-free-badge {
+  background: var(--text-on-accent);
+  color: var(--color-accent);
+}
+
+.opencode-free-badge {
+  font-size: var(--font-smallest);
+  padding: 1px 6px;
+  border-radius: var(--radius-s);
+  background: var(--background-modifier-active-hover);
+  color: var(--text-accent);
+  font-weight: 600;
+}
