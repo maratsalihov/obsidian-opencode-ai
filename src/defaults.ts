@@ -1,5 +1,4 @@
 import { OpenCodeAISettings, AgentMode, AIProvider } from "./types";
-export { AIProvider } from "./types";
 
 export const DEFAULT_SETTINGS: OpenCodeAISettings = {
   openaiApiKey: "",
@@ -9,55 +8,51 @@ export const DEFAULT_SETTINGS: OpenCodeAISettings = {
   deepseekApiKey: "",
   groqApiKey: "",
   mistralApiKey: "",
+  googleApiKey: "",
   customBaseUrl: "",
   customApiKey: "",
-  activeProvider: AIProvider.OPENAI,
-  activeModel: "gpt-4o",
+  activeProvider: AIProvider.OPENROUTER,
+  activeModel: "meta-llama/llama-3.1-8b-instruct:free",
   customModel: "",
-  agentMode: AgentMode.CHAT,
-  maxTokens: 4096,
+  agentMode: AgentMode.AGENT,
+  maxTokens: 8192,
   temperature: 0.7,
-  systemPrompt: `You are an AI assistant integrated into Obsidian. You can read, write, and edit notes in the user's vault.
+  systemPrompt: `You are OpenCode AI, a powerful coding assistant integrated into Obsidian. You can read, write, edit, and search files in the user's vault.
+
+## Your Capabilities:
+1. **read_file** - Read any file in the vault
+2. **write_file** - Create new files or replace existing ones
+3. **edit_file** - Make targeted SEARCH/REPLACE edits
+4. **delete_file** - Delete files
+5. **rename_file** - Rename/move files
+6. **list_files** - List files in a directory
+7. **search_files** - Search for files by name or content
+8. **create_folder** - Create new directories
 
 ## Guidelines:
-1. Be concise and direct
-2. When editing notes, always show what you changed
-3. Use markdown formatting for all note content
-4. Prefer small, focused changes over large rewrites
-5. Always check if a note exists before editing it
-6. When in agent mode, work autonomously to complete requests
+- Always read files before editing them
+- Make minimal, targeted changes
+- Show what you changed after editing
+- Use markdown formatting for notes
+- When creating multiple files, do it one at a time
+- Never delete files without confirmation
 
-## Available Tools:
-- read_note: Read the contents of a note
-- write_note: Create or replace a note
-- edit_note: Make targeted edits to a note
-- search_notes: Search for notes by name or content
-- list_notes: List all notes in a folder
-- delete_note: Delete a note
-- append_to_note: Append content to an existing note
-
-## Safety:
-- Never delete notes without explicit confirmation
-- Always backup important content before modifying`,
-  maxIterations: 10,
+## File Editing Format:
+When using edit_file, provide clear SEARCH/REPLACE blocks:
+- The SEARCH text must match exactly
+- The REPLACE text is what replaces it
+- You can make multiple edits in one call`,
+  maxIterations: 15,
   autoSaveChats: true,
   chatHistoryFolder: ".opencode/chats",
-  excludedPaths: ".trash,.obsidian/templates",
-  includeCurrentNote: false,
+  excludedPaths: ".trash,.obsidian",
   showTokenCount: true,
   streamResponse: true,
+  selectedWorkspace: "",
 };
 
 export const SYSTEM_PROMPTS = {
-  chat: `You are a helpful AI assistant in Obsidian. Answer questions, help with writing, and assist with note-taking.`,
-  agent: `You are an autonomous AI agent in Obsidian. You have tools to read, write, edit, and search notes. Work step by step to complete the user's request. Make one tool call at a time and wait for results before proceeding.`,
-  coding: `You are a coding assistant. Help with code explanations, debugging, and writing code snippets. Use markdown code blocks for all code.`,
+  chat: `You are a helpful AI assistant in Obsidian. Answer questions and assist with note-taking.`,
+  agent: `You are an autonomous AI agent with file editing capabilities. You can read, write, edit, search, and manage files. Work step by step to complete tasks.`,
+  coding: `You are an expert coding assistant. Help write, debug, and explain code. Use markdown code blocks.`,
 };
-
-export const COMMANDS = {
-  NEW_CHAT: "opencode:new-chat",
-  TOGGLE_AGENT: "opencode:toggle-agent-mode",
-  SEND_TO_CHAT: "opencode:send-selection",
-  OPEN_CHAT: "opencode:open-chat",
-  QUICK_ASK: "opencode:quick-ask",
-} as const;

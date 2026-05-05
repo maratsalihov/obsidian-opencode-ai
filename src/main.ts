@@ -26,7 +26,8 @@ export default class OpenCodeAIPlugin extends Plugin {
       this.settings.openrouterApiKey,
       this.settings.deepseekApiKey,
       this.settings.groqApiKey,
-      this.settings.mistralApiKey
+      this.settings.mistralApiKey,
+      this.settings.googleApiKey
     );
 
     this.chatManager = new ChatManager(this.app.vault, this.providerManager);
@@ -109,7 +110,8 @@ export default class OpenCodeAIPlugin extends Plugin {
       this.settings.openrouterApiKey,
       this.settings.deepseekApiKey,
       this.settings.groqApiKey,
-      this.settings.mistralApiKey
+      this.settings.mistralApiKey,
+      this.settings.googleApiKey
     );
 
     this.chatManager.setSystemPrompt(this.settings.systemPrompt);
@@ -142,7 +144,9 @@ export default class OpenCodeAIPlugin extends Plugin {
     for (const leaf of leaves) {
       const view = leaf.view as OpenCodeChatView;
       if (view instanceof OpenCodeChatView) {
-        view.updateState();
+        view.loadChatHistory();
+        view["updateModelDisplay"]();
+        view["updateModeDisplay"]();
       }
     }
   }

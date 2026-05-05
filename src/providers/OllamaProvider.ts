@@ -1,4 +1,4 @@
-import { AIModel, AIProvider, StreamChunk } from "../types";
+import { AIProvider, AIModel, StreamChunk, ALL_MODELS } from "../types";
 import { BaseAIProvider } from "./BaseProvider";
 
 export class OllamaProvider extends BaseAIProvider {
@@ -6,17 +6,10 @@ export class OllamaProvider extends BaseAIProvider {
     super("", baseUrl, AIProvider.OLLAMA);
   }
 
-  isConfigured(): boolean {
-    return this.baseUrl.length > 0;
-  }
+  isConfigured(): boolean { return this.baseUrl.length > 0; }
 
   getModels(): AIModel[] {
-    return [
-      { id: "llama3.1", name: "Llama 3.1", provider: this.provider, maxTokens: 8192, supportsStreaming: true, supportsTools: true, contextWindow: 128000 },
-      { id: "qwen2.5-coder", name: "Qwen 2.5 Coder", provider: this.provider, maxTokens: 8192, supportsStreaming: true, supportsTools: true, contextWindow: 32000 },
-      { id: "deepseek-coder-v2", name: "DeepSeek Coder V2", provider: this.provider, maxTokens: 8192, supportsStreaming: true, supportsTools: true, contextWindow: 32000 },
-      { id: "mistral-nemo", name: "Mistral Nemo", provider: this.provider, maxTokens: 8192, supportsStreaming: true, supportsTools: true, contextWindow: 32000 },
-    ];
+    return ALL_MODELS.filter((m) => m.provider === AIProvider.OLLAMA);
   }
 
   async chat(
@@ -25,29 +18,18 @@ export class OllamaProvider extends BaseAIProvider {
     _tools?: Record<string, unknown>[],
     onStream?: (chunk: StreamChunk) => void
   ): Promise<string> {
-    if (!this.isConfigured()) {
-      throw new Error("Ollama base URL not configured.");
-    }
+    if (!this.isConfigured()) throw new Error("Ollama URL not configured.");
 
-    if (onStream) {
-      return this.streamChat(messages, model, onStream);
-    }
+    if (onStream) return this.streamChat(messages, model, onStream);
 
-    const response = await fetch(`${this.baseUrl}/api/chat`, {
+    const res = await fetch(`${this.baseUrl}/api/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model,
-        messages: messages.map((m) => ({ role: m.role, content: m.content })),
-        stream: false,
-      }),
+      body: JSON.stringify({ model, messages, stream: false }),
     });
 
-    if (!response.ok) {
-      throw new Error(`Ollama API error: ${response.statusText}`);
-    }
-
-    const data = await response.json();
+    if (!res.ok) throw new Error(`Ollama error: ${res.statusText}`);
+    const data = await res.json();
     return data.message?.content || "";
   }
 
@@ -56,68 +38,39 @@ export class OllamaProvider extends BaseAIProvider {
     model: string,
     onStream: (chunk: StreamChunk) => void
   ): Promise<string> {
-    const response = await fetch(`${this.baseUrl}/api/chat`, {
+    const res = await fetch(`${this.baseUrl}/api/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model,
-        messages: messages.map((m) => ({ role: m.role, content: m.content })),
-        stream: true,
-      }),
+      body: JSON.stringify({ model, messages, stream: true }),
     });
 
-    if (!response.ok) {
-      throw new Error(`Ollama API error: ${response.statusText}`);
-    }
+    if (!res.ok) throw new Error(`Ollama error: ${res.statusText}`);
 
-    const reader = response.body?.getReader();
-    if (!reader) {
-      throw new Error("Failed to get response reader");
-    }
+    const reader = res.body?.getReader();
+    if (!reader) throw new Error("No response reader");
 
     const decoder = new TextDecoder();
-    let buffer = "";
-    let fullContent = "";
+    let buf = "", full = "";
 
     while (true) {
       const { done, value } = await reader.read();
       if (done) break;
-
-      buffer += decoder.decode(value, { stream: true });
-      const lines = buffer.split("\n");
-      buffer = lines.pop() || "";
+      buf += decoder.decode(value, { stream: true });
+      const lines = buf.split("\n");
+      buf = lines.pop() || "";
 
       for (const line of lines) {
-        const trimmed = line.trim();
-        if (!trimmed) continue;
-
+        const t = line.trim();
+        if (!t) continue;
         try {
-          const json = JSON.parse(trimmed);
-          const content = json.message?.content || "";
-          if (content) {
-            fullContent += content;
-            onStream({ text: content, isComplete: false });
-          }
-          if (json.done) {
-            onStream({ text: "", isComplete: true });
-          }
-        } catch {
-          // Skip invalid JSON
-        }
+          const j = JSON.parse(t);
+          const c = j.message?.content || "";
+          if (c) { full += c; onStream({ text: c, isComplete: false }); }
+          if (j.done) onStream({ text: "", isComplete: true });
+        } catch {}
       }
     }
 
-    return fullContent;
-  }
-
-  async listLocalModels(): Promise<string[]> {
-    try {
-      const response = await fetch(`${this.baseUrl}/api/tags`);
-      if (!response.ok) return [];
-      const data = await response.json();
-      return (data.models || []).map((m: { name: string }) => m.name);
-    } catch {
-      return [];
-    }
+    return full;
   }
 }

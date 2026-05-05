@@ -1,93 +1,203 @@
-/* OpenCode AI Chat View Styles */
+/* OpenCode AI - ZED-style Chat Interface */
 
 .opencode-chat-container {
   display: flex;
   flex-direction: column;
   height: 100%;
   padding: 0;
-}
-
-/* Header */
-.opencode-chat-header {
-  display: flex;
-  flex-direction: column;
-  padding: 12px;
-  gap: 10px;
-  border-bottom: 1px solid var(--background-modifier-border);
   background: var(--background-primary);
 }
 
-.opencode-chat-controls {
+/* ===== HEADER ===== */
+.opencode-chat-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  background: var(--background-secondary);
+  gap: 8px;
 }
 
-.opencode-label {
-  font-size: var(--font-smaller);
-  color: var(--text-muted);
-}
-
-.opencode-select {
-  background: var(--background-modifier-form-field);
-  border: 1px solid var(--background-modifier-border);
+/* Model Display (ZED-style clickable) */
+.opencode-model-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
   border-radius: var(--radius-s);
-  padding: 4px 8px;
-  font-size: var(--font-smaller);
-  color: var(--text-normal);
   cursor: pointer;
+  transition: background 0.15s;
+  flex: 1;
+  min-width: 0;
 }
 
-.opencode-select:hover {
-  border-color: var(--interactive-accent);
+.opencode-model-display:hover {
+  background: var(--background-modifier-hover);
+}
+
+.opencode-model-display-name {
+  font-size: var(--font-smaller);
+  font-weight: 600;
+  color: var(--text-normal);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.opencode-model-display-provider {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.opencode-model-chevron {
+  color: var(--text-faint);
+  margin-left: auto;
+}
+
+.opencode-model-chevron svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Model Badge */
+.opencode-model-badge-inline {
+  font-size: 9px;
+  background: var(--color-green);
+  color: white;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-weight: 700;
 }
 
 /* Mode Toggle */
 .opencode-mode-toggle {
   cursor: pointer;
-  padding: 4px 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
   border-radius: var(--radius-s);
   font-size: var(--font-smaller);
   font-weight: 600;
-  transition: all 0.2s;
+  transition: all 0.15s;
+  white-space: nowrap;
 }
 
 .opencode-mode-chat {
-  background: var(--background-secondary);
+  background: var(--background-modifier-form-field);
   color: var(--text-muted);
 }
 
 .opencode-mode-agent {
-  background: var(--interactive-accent);
-  color: var(--text-on-accent);
+  background: var(--color-purple);
+  color: white;
 }
 
-.opencode-mode-toggle:hover {
-  opacity: 0.8;
+.opencode-mode-icon svg {
+  width: 14px;
+  height: 14px;
 }
 
-/* New Chat Button */
-.opencode-new-chat-btn {
-  cursor: pointer;
-  padding: 6px;
-  border-radius: var(--radius-s);
+/* ===== MODEL PICKER MODAL ===== */
+.opencode-model-picker {
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.opencode-model-picker h2 {
+  margin: 0 0 16px 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  font-size: 18px;
+}
+
+.opencode-model-section-header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
+  gap: 8px;
+  margin: 16px 0 8px 0;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--background-modifier-border);
 }
 
-.opencode-new-chat-btn:hover {
+.opencode-model-section-header h3 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.opencode-model-section-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.opencode-model-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border-radius: var(--radius-s);
+  cursor: pointer;
+  transition: background 0.1s;
+  gap: 10px;
+}
+
+.opencode-model-item:hover {
   background: var(--background-modifier-hover);
 }
 
-.opencode-new-chat-btn svg {
-  width: 18px;
-  height: 18px;
+.opencode-model-info {
+  flex: 1;
+  min-width: 0;
 }
 
-/* Messages Area */
+.opencode-model-name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+
+.opencode-model-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-normal);
+}
+
+.opencode-model-badge-free {
+  font-size: 10px;
+  background: var(--color-green);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.opencode-model-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: block;
+}
+
+.opencode-model-meta {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+.opencode-model-price {
+  color: var(--color-green);
+}
+
+/* ===== MESSAGES ===== */
 .opencode-messages-wrapper {
   flex: 1;
   overflow-y: auto;
@@ -97,14 +207,16 @@
 .opencode-messages {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
 }
 
-/* Message */
 .opencode-message {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .opencode-message-user {
@@ -115,16 +227,21 @@
   align-items: flex-start;
 }
 
+.opencode-message-tool_result {
+  align-items: flex-start;
+  opacity: 0.7;
+}
+
 .opencode-message-header {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: var(--font-smaller);
+  font-size: 11px;
 }
 
 .opencode-message-role {
   font-weight: 600;
-  color: var(--text-normal);
+  color: var(--text-muted);
 }
 
 .opencode-message-status {
@@ -132,11 +249,20 @@
   font-style: italic;
 }
 
+.opencode-status-working {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
 .opencode-message-content {
-  max-width: 85%;
+  max-width: 90%;
   padding: 10px 14px;
   border-radius: var(--radius-m);
-  line-height: 1.5;
+  line-height: 1.6;
   font-size: var(--font-size);
   word-wrap: break-word;
 }
@@ -151,58 +277,12 @@
   color: var(--text-normal);
 }
 
-.opencode-message-content p {
-  margin: 0 0 8px 0;
+.opencode-message-error {
+  background: var(--color-red) !important;
+  color: white !important;
 }
 
-.opencode-message-content p:last-child {
-  margin-bottom: 0;
-}
-
-.opencode-message-content h1,
-.opencode-message-content h2,
-.opencode-message-content h3 {
-  margin: 12px 0 6px 0;
-  font-weight: 600;
-}
-
-.opencode-message-content h1 {
-  font-size: 1.3em;
-}
-
-.opencode-message-content h2 {
-  font-size: 1.15em;
-}
-
-.opencode-message-content h3 {
-  font-size: 1.05em;
-}
-
-.opencode-message-content ul,
-.opencode-message-content ol {
-  margin: 6px 0;
-  padding-left: 20px;
-}
-
-.opencode-message-content li {
-  margin: 4px 0;
-}
-
-.opencode-message-content blockquote {
-  margin: 8px 0;
-  padding: 6px 12px;
-  border-left: 3px solid var(--interactive-accent);
-  color: var(--text-muted);
-}
-
-.opencode-message-content code {
-  background: var(--code-background);
-  padding: 2px 5px;
-  border-radius: var(--radius-xs);
-  font-family: var(--font-monospace);
-  font-size: 0.9em;
-}
-
+/* Code blocks */
 .opencode-code-block {
   background: var(--code-background);
   border-radius: var(--radius-m);
@@ -215,7 +295,7 @@
 }
 
 .opencode-code-lang {
-  font-size: var(--font-smaller);
+  font-size: 11px;
   color: var(--text-muted);
   margin-bottom: 6px;
   padding-bottom: 4px;
@@ -227,18 +307,44 @@
   padding: 0;
 }
 
-/* Input Area */
+.opencode-message-content code {
+  background: var(--code-background);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-family: var(--font-monospace);
+  font-size: 0.9em;
+}
+
+.opencode-message-content blockquote {
+  margin: 8px 0;
+  padding: 6px 12px;
+  border-left: 3px solid var(--interactive-accent);
+  color: var(--text-muted);
+}
+
+/* ===== INPUT ===== */
 .opencode-input-area {
   display: flex;
-  gap: 8px;
+  flex-direction: column;
   padding: 12px;
   border-top: 1px solid var(--background-modifier-border);
   background: var(--background-primary);
-  align-items: flex-end;
+  gap: 6px;
+}
+
+.opencode-context-bar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 4px;
+}
+
+.opencode-context-hint {
+  font-size: 10px;
+  color: var(--text-faint);
 }
 
 .opencode-input {
-  flex: 1;
   resize: none;
   border: 1px solid var(--background-modifier-border);
   border-radius: var(--radius-m);
@@ -255,6 +361,7 @@
 .opencode-input:focus {
   border-color: var(--interactive-accent);
   outline: none;
+  box-shadow: 0 0 0 2px var(--background-modifier-border-hover);
 }
 
 .opencode-input::placeholder {
@@ -262,24 +369,29 @@
 }
 
 .opencode-send-btn {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
   cursor: pointer;
-  padding: 10px;
-  border-radius: var(--radius-m);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-s);
   background: var(--interactive-accent);
   color: var(--text-on-accent);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  transition: all 0.15s;
 }
 
 .opencode-send-btn:hover {
   opacity: 0.85;
+  transform: scale(1.05);
 }
 
 .opencode-send-btn svg {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
 }
 
 /* Scrollbar */
@@ -293,30 +405,15 @@
 
 .opencode-messages-wrapper::-webkit-scrollbar-thumb {
   background: var(--scrollbar-thumb-bg);
-  border-radius: var(--radius-s);
-}
-
-.opencode-messages-wrapper::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-active-thumb-bg);
-}
-
-/* Settings */
-.opencode-settings-warning {
-  color: var(--text-warning);
-}
-
-/* Dark mode adjustments */
-.theme-dark .opencode-message-content {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
 }
 
 /* Responsive */
 @media (max-width: 600px) {
-  .opencode-chat-controls {
+  .opencode-chat-header {
     flex-direction: column;
-    align-items: stretch;
+    gap: 6px;
   }
-
   .opencode-message-content {
     max-width: 95%;
   }

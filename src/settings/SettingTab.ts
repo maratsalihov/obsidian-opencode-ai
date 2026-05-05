@@ -1,7 +1,7 @@
 import { App, PluginSettingTab, Setting, Notice } from "obsidian";
 import OpenCodeAIPlugin from "../main";
-import { AgentMode } from "../types";
-import { AIProvider, SYSTEM_PROMPTS } from "../defaults";
+import { AgentMode, AIProvider } from "../types";
+import { SYSTEM_PROMPTS } from "../defaults";
 import { OpenCodeAISettings } from "../types";
 
 export class OpenCodeSettingTab extends PluginSettingTab {
@@ -98,6 +98,19 @@ export class OpenCodeSettingTab extends PluginSettingTab {
           })
       );
 
+    new Setting(containerEl)
+      .setName("Google API Key")
+      .setDesc("Get your key from https://aistudio.google.com/apikey - Enables Gemini with free tier")
+      .addText((text) =>
+        text
+          .setPlaceholder("AIza...")
+          .setValue(this.plugin.settings.googleApiKey)
+          .onChange(async (value) => {
+            this.plugin.settings.googleApiKey = value;
+            await this.plugin.saveSettings();
+          })
+      );
+
     containerEl.createEl("h3", { text: "Local Models" });
 
     new Setting(containerEl)
@@ -127,6 +140,7 @@ export class OpenCodeSettingTab extends PluginSettingTab {
           .addOption(AIProvider.DEEPSEEK, "DeepSeek")
           .addOption(AIProvider.GROQ, "Groq")
           .addOption(AIProvider.MISTRAL, "Mistral")
+          .addOption(AIProvider.GOOGLE, "Google")
           .setValue(this.plugin.settings.activeProvider)
           .onChange(async (value) => {
             this.plugin.settings.activeProvider = value as AIProvider;
