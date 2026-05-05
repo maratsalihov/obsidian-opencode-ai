@@ -1,7 +1,7 @@
 {
   "id": "opencode-ai-agent",
   "name": "OpenCode AI Agent",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "minAppVersion": "1.1.0",
   "description": "AI coding agent with file editing, agent mode, and multi-provider support (OpenAI, Anthropic, Ollama). Like Claude Code inside Obsidian.",
   "author": "Marat Salikhov",
